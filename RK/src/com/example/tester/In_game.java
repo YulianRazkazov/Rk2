@@ -14,6 +14,7 @@ import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.BaseBundle;
 import android.os.Bundle; 
 import android.support.annotation.DrawableRes;
 import android.support.v7.app.ActionBarActivity;
@@ -27,16 +28,11 @@ import android.widget.TextView;
 		ImageButton Zero, One, Two, Three;
 		TextView Score, Hint;
 		AssetManager filequestions;
-		List<String> questions;
+		ArrayList<String> questions = new ArrayList<String>();
 		ImageView Center;
 		AssetManager aset;
 		
 		
-
- 		public In_game() {
-			questions = new ArrayList<String>();
-		}
-
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
@@ -48,24 +44,37 @@ import android.widget.TextView;
 	        Score = (TextView) findViewById(R.id.Score);
 	        Hint = (TextView) findViewById(R.id.Hint);
 	        Center=(ImageView) findViewById(R.id.MainPicture);
+			try {
+				questionMaker(fileReader());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			assetpic();
 		}
 		
 		
-				public void fileReader(String[] lines) throws IOException {
+				public ArrayList<String> fileReader(BaseBundle lines) throws IOException {
 				filequestions=getAssets();
 				InputStream is = filequestions.open("Questionindex.txt");
 				InputStreamReader inputStreamReader = new InputStreamReader(is);
 				BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 				String line;
-				int i=0;
+				ArrayList<String> list = new ArrayList<String>();
 				while ((line=bufferedReader.readLine()) != null){
-					lines[i] = line;
-				}
+					list.add(line);
+					}
+				return list;
 			}
-			public void questionMaker(String[] lines){
-				for(int i=0; i<=lines.length;i+=2){
-					questions.add(lines[i]+"\n"+lines[i+1]);
+			
+			public void questionMaker(ArrayList<String> lines){
+				for(int i=0; i<=lines.size();i+=2){
+					questions.add(lines.get(i)+"\n"+lines.get(i+1));
+					}
+				for(int i=0; i<lines.size();i++){
+					questions.add(lines.get(i));
 				}
+				
 				Collections.shuffle(questions, new Random(System.nanoTime()));
 				
 			}
