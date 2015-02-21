@@ -9,65 +9,83 @@
     tools:context="com.example.tester.In_game" >
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="88dp"
+        android:layout_toLeftOf="@+id/MainPicture"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/linearLayout1"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="43dp" >
+
+        <ImageButton
+            android:id="@+id/Glass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/glass"
+            android:onClick="onClick" />
+
+        <Button
+            android:id="@+id/Submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@color/set"
+            android:text="Submit"
+            android:onClick="onClick" />
+
+        <ImageButton
+            android:id="@+id/Special"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/special"
+            android:onClick="onClick" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true" >
-
-        <ImageButton
-            android:id="@+id/None"
-            android:layout_width="103dp"
-            android:layout_height="70dp"
-            android:src="@drawable/metal" />
+        android:layout_above="@+id/linearLayout2"
+        android:layout_centerHorizontal="true" >
 
         <ImageButton
             android:id="@+id/Metal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher" />
-
-        <ImageButton
-            android:id="@+id/Plastic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="22dp"
-            android:src="@drawable/ic_launcher" />
+            android:background="@drawable/metal"
+            android:onClick="onClick" />
 
         <ImageButton
             android:id="@+id/Paper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher" />
+            android:background="@drawable/paper"
+            android:onClick="onClick" />
+
+        <ImageButton
+            android:id="@+id/Plastic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/plastic" 
+            android:onClick="onClick"/>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/Score"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/MainPhoto"
-        android:layout_marginRight="14dp"
-        android:layout_marginTop="28dp"
-        android:text="Score" />
-
-    <TextView
-        android:id="@+id/Hint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="51dp"
-        android:text="Bonus info for progress" />
 
     <ImageView
         android:id="@+id/MainPicture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/linearLayout1"
-        android:layout_below="@+id/textView2"
-        android:layout_marginLeft="23dp"
-        android:layout_marginTop="64dp"
-        android:src="@drawable/tester"/>
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignTop="@+id/linearLayout3"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/tester" />
 
 </RelativeLayout>

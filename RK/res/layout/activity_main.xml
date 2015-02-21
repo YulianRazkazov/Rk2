@@ -24,7 +24,8 @@
             android:background="@color/set"
             android:onClick="onClick"
             android:text="Start game" />
-                
+
+        
                
         <Button
             android:id="@+id/Second"
@@ -41,7 +42,39 @@
             android:background="@color/set"
             android:onClick="onClick"
             android:text="About" />
+
+        <Button
+            android:id="@+id/Settings"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:background="@color/set"
+            android:onClick="onClick"
+            android:text="Settings" />
  
     </LinearLayout>
 
+    <ImageButton
+        android:id="@+id/Sound"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/soundon"
+        android:onClick="onClick" />
+
 </RelativeLayout>
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+

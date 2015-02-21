@@ -1,2 +1,3 @@
-gamelogo.png
-2 3 
+gamelogo.png 1,0
+battery.jpg 2,
+menu.png 0,3

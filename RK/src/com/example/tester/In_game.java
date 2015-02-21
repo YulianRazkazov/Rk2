@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.Random;
-
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
 import android.graphics.Bitmap;
@@ -19,31 +19,34 @@ import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 	public class In_game extends ActionBarActivity {
-		ImageButton Zero, One, Two, Three;
+		ImageButton Paper, Metal, Special, Plastic,Glass;
 		TextView Score, Hint;
 		AssetManager filequestions;
 		ArrayList<String> questions = new ArrayList<String>();
 		ImageView Center;
 		AssetManager aset;
+		private int[] answers = new int[5];
+		ArrayList<ImageButton> aButtons = new ArrayList<ImageButton>();
+		
 		
 		
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.activity_in_game);
-			Zero = (ImageButton)findViewById(R.id.None);
-	        One = (ImageButton)findViewById(R.id.Metal);
-	        Two =(ImageButton)findViewById(R.id.Plastic);
-	        Three =(ImageButton)findViewById(R.id.Paper);
-	        Score = (TextView) findViewById(R.id.Score);
-	        Hint = (TextView) findViewById(R.id.Hint);
+			aButtons.add((ImageButton)findViewById(R.id.Paper));
+			aButtons.add((ImageButton)findViewById(R.id.Metal));
+			aButtons.add((ImageButton)findViewById(R.id.Special));
+			aButtons.add((ImageButton)findViewById(R.id.Plastic));
+			aButtons.add((ImageButton)findViewById(R.id.Glass));
 	        Center=(ImageView) findViewById(R.id.MainPicture);
+	        
 			try {
 				questionMaker(fileReader());
 			} catch (IOException e) {
@@ -54,7 +57,7 @@ import android.widget.TextView;
 		}
 		
 		
-				public ArrayList<String> fileReader(BaseBundle lines) throws IOException {
+				public ArrayList<String> fileReader() throws IOException {
 				filequestions=getAssets();
 				InputStream is = filequestions.open("Questionindex.txt");
 				InputStreamReader inputStreamReader = new InputStreamReader(is);
@@ -68,21 +71,18 @@ import android.widget.TextView;
 			}
 			
 			public void questionMaker(ArrayList<String> lines){
-				for(int i=0; i<=lines.size();i+=2){
-					questions.add(lines.get(i)+"\n"+lines.get(i+1));
-					}
 				for(int i=0; i<lines.size();i++){
 					questions.add(lines.get(i));
+					Collections.shuffle(questions, new Random(System.nanoTime()));
 				}
 				
-				Collections.shuffle(questions, new Random(System.nanoTime()));
 				
 			}
 				public void assetpic(){
 					AssetManager assetManager = getAssets();
 			        InputStream istr;
 			        try {
-			            istr = assetManager.open(questions.get(0));
+			        	istr = assetManager.open(questions.get(0).split(" ")[0]);
 			            Bitmap bitmap = BitmapFactory.decodeStream(istr);
 			            Center.setImageBitmap(bitmap);
 			            istr.close();
@@ -98,7 +98,7 @@ import android.widget.TextView;
 		        return true;
 		    }
 
-
+		 
 		    @Override
 		    public boolean onOptionsItemSelected(MenuItem item) {
 		        // Handle action bar item clicks here. The action bar will
@@ -110,9 +110,91 @@ import android.widget.TextView;
 		        }
 		        return super.onOptionsItemSelected(item);
 		    }
-		 
 		    
+		    public void onClick(View v){
+	            switch (v.getId()) {
+	                case R.id.Paper:
+	                    selectButton(0);
+	                    break;
+	                case R.id.Metal:
+	                	selectButton(1);
+	                    break;
+	                case R.id.Special:
+	                	selectButton(2);
+	                    break;
+	                case R.id.Plastic:
+	                	selectButton(3);
+	                    break;
+	                case R.id.Glass:
+	                	selectButton(4);
+	                    break;
+	                case R.id.Submit:
+	                	doShit();
+	                	break;
+	            }
+		    }
 		    
+		    void selectButton(int position){
+		    	if (answers[position] == 0){
+		    		aButtons.get(position).setBackgroundResource(selectBackground(position));
+		    		answers[position] = 1;
+		    	}else {
+		    		aButtons.get(position).setBackgroundResource(selectBackground(position + 6));
+		    		answers[position] = 0;
+		    	}
+		    }
+		    
+		    int selectBackground(int position){
+		    	switch (position){
+		    	case 0:
+		    		return R.drawable.paper_push;
+		    	case 1:
+		    		return R.drawable.metal_push;
+		    	case 2:
+		    		return R.drawable.special_push;
+		    	case 3:
+		    		return R.drawable.plastic_push;
+		    	case 4:
+		    		return R.drawable.glass_push;
+		    	case 5:
+		    		return R.drawable.paper_push;
+		    	case 6:
+		    		return R.drawable.paper;
+		    	case 7:
+		    		return R.drawable.metal;
+		    	case 8:
+		    		return R.drawable.special;
+		    	case 9:
+		    		return R.drawable.plastic;
+		    	case 10:
+		    		return R.drawable.glass;
+		    	case 11:
+		    		return R.drawable.paper;
+		    	default:
+		    			return 0;
+		    	}
+		    }
+		    
+		    void goToAnsweredWrong(){
+				Intent myAnsweredWrongIntent = new Intent(In_game.this, Highscore.class);
+				In_game.this.startActivity(myAnsweredWrongIntent);
+				finish();
+			}
+		    void doShit(){
+		    	String[] realAnswers = questions.get(0).split(" ")[1].split(",");
+		    	for (int i= 0; i < 5; i++){
+		    		if (answers[i] == 1){
+		    			for (String ans : realAnswers) {
+				    		if (Integer.parseInt(ans) == i){
+				    			System.out.println("evala produljavash");
+							}else {
+								goToAnsweredWrong();
+							}
+		    			}
+		    		}
+		    		
+		    		
+		    	}
+		    }
 	}
-
 	
