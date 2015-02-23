@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/main_background"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -9,23 +10,11 @@
     tools:context="com.example.tester.In_game" >
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="88dp"
-        android:layout_toLeftOf="@+id/MainPicture"
-        android:orientation="vertical" >
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/linearLayout1"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="43dp" >
+        android:layout_alignParentLeft="true" >
 
         <ImageButton
             android:id="@+id/Glass"
@@ -34,20 +23,18 @@
             android:background="@drawable/glass"
             android:onClick="onClick" />
 
-        <Button
-            android:id="@+id/Submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:background="@color/set"
-            android:text="Submit"
-            android:onClick="onClick" />
-
         <ImageButton
             android:id="@+id/Special"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/special"
+            android:onClick="onClick" />
+
+        <ImageButton
+            android:id="@+id/Other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/other"
             android:onClick="onClick" />
     </LinearLayout>
 
@@ -56,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/linearLayout2"
-        android:layout_centerHorizontal="true" >
+        android:layout_alignParentLeft="true" >
 
         <ImageButton
             android:id="@+id/Metal"
@@ -76,16 +63,46 @@
             android:id="@+id/Plastic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/plastic" 
-            android:onClick="onClick"/>
+            android:background="@drawable/plastic"
+            android:onClick="onClick" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/Submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout1"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:background="@color/set"
+        android:onClick="onClick"
+        android:text="Submit" />
+
+    <TextView
+        android:id="@+id/Counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="46dp"
+        android:text="Score"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout1"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignRight="@+id/linearLayout1"
+        android:layout_below="@+id/Counter"
+        android:layout_marginRight="16dp" >
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/MainPicture"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_alignTop="@+id/linearLayout3"
-        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/Submit"
+        android:layout_marginRight="14dp"
+        android:layout_toLeftOf="@+id/Submit"
         android:src="@drawable/tester" />
 
 </RelativeLayout>

@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.Random;
@@ -25,14 +26,16 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 	public class In_game extends ActionBarActivity {
-		ImageButton Paper, Metal, Special, Plastic,Glass;
-		TextView Score, Hint;
+		ImageButton Paper, Metal, Special, Plastic,Glass,Other;
+		TextView Score;
 		AssetManager filequestions;
 		ArrayList<String> questions = new ArrayList<String>();
 		ImageView Center;
 		AssetManager aset;
-		private int[] answers = new int[5];
+		private int[] answers = new int[6];
 		ArrayList<ImageButton> aButtons = new ArrayList<ImageButton>();
+		int numberOfChosenPic = 0;
+		int counter=0;
 		
 		
 		
@@ -45,7 +48,9 @@ import android.widget.TextView;
 			aButtons.add((ImageButton)findViewById(R.id.Special));
 			aButtons.add((ImageButton)findViewById(R.id.Plastic));
 			aButtons.add((ImageButton)findViewById(R.id.Glass));
+			aButtons.add((ImageButton)findViewById(R.id.Other));
 	        Center=(ImageView) findViewById(R.id.MainPicture);
+	        Score = (TextView) findViewById(R.id.Counter);
 	        
 			try {
 				questionMaker(fileReader());
@@ -82,7 +87,7 @@ import android.widget.TextView;
 					AssetManager assetManager = getAssets();
 			        InputStream istr;
 			        try {
-			        	istr = assetManager.open(questions.get(0).split(" ")[0]);
+			        	istr = assetManager.open(questions.get(numberOfChosenPic).split(" ")[0]);
 			            Bitmap bitmap = BitmapFactory.decodeStream(istr);
 			            Center.setImageBitmap(bitmap);
 			            istr.close();
@@ -128,6 +133,9 @@ import android.widget.TextView;
 	                case R.id.Glass:
 	                	selectButton(4);
 	                    break;
+	                case R.id.Other:
+	                	selectButton(5);
+	                    break;
 	                case R.id.Submit:
 	                	doShit();
 	                	break;
@@ -157,7 +165,7 @@ import android.widget.TextView;
 		    	case 4:
 		    		return R.drawable.glass_push;
 		    	case 5:
-		    		return R.drawable.paper_push;
+		    		return R.drawable.other_push;
 		    	case 6:
 		    		return R.drawable.paper;
 		    	case 7:
@@ -169,7 +177,7 @@ import android.widget.TextView;
 		    	case 10:
 		    		return R.drawable.glass;
 		    	case 11:
-		    		return R.drawable.paper;
+		    		return R.drawable.other;
 		    	default:
 		    			return 0;
 		    	}
@@ -180,21 +188,39 @@ import android.widget.TextView;
 				In_game.this.startActivity(myAnsweredWrongIntent);
 				finish();
 			}
+		    
+		    void resetQuestions() {
+		    	for (int i = 0; i < 6; i++) {
+					answers[i] = 0;
+					aButtons.get(i).setBackgroundResource(selectBackground(i + 6));
+				}
+		    	numberOfChosenPic++;
+		    	assetpic();
+		    }
+		    
 		    void doShit(){
-		    	String[] realAnswers = questions.get(0).split(" ")[1].split(",");
-		    	for (int i= 0; i < 5; i++){
-		    		if (answers[i] == 1){
-		    			for (String ans : realAnswers) {
-				    		if (Integer.parseInt(ans) == i){
-				    			System.out.println("evala produljavash");
-							}else {
-								goToAnsweredWrong();
-							}
-		    			}
-		    		}
-		    		
-		    		
+		    	String[] realAnswers = questions.get(numberOfChosenPic).split(" ")[1].split(",");
+		    	
+		    	boolean flag = false;
+		    	for (int i = 0; i < 6; i++) {
+					if(answers[i] == 1) {
+						flag = true;
+						break;
+					}
+				}
+		    	if(!flag) {
+		    		return;
 		    	}
+		    	
+		    	for (int i= 0; i < 6; i++){
+				    if ((!Arrays.asList(realAnswers).contains(Integer.toString(i)) && answers[i] == 1) || 
+				    		(Arrays.asList(realAnswers).contains(Integer.toString(i)) && answers[i] == 0)){			    
+				    	goToAnsweredWrong();
+				    }
+		    	}
+		    	counter++;
+		    	resetQuestions();
+		    	Score.setText("Score  " + counter);
 		    }
 	}
 	

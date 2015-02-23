@@ -24,8 +24,7 @@
             android:background="@color/set"
             android:onClick="onClick"
             android:text="Start game" />
-
-        
+                
                
         <Button
             android:id="@+id/Second"
@@ -53,28 +52,25 @@
  
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/Sound"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentRight="true"
+    <Button
+        android:id="@+id/Soundon"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@drawable/soundon"
-        android:onClick="onClick" />
+        android:layout_alignRight="@+id/linearLayout1"
+        android:background="@color/set"
+        android:text="Sound ON" />
+
+    <Button
+        android:id="@+id/Soundoff"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/Soundon"
+        android:layout_alignBottom="@+id/Soundon"
+        android:layout_centerHorizontal="true"
+        android:background="@color/set"
+        android:text="Sound OFF" />
 
 </RelativeLayout>
-
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
